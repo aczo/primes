@@ -1,24 +1,21 @@
 # Prime numbers
 
-import matplotlib.pyplot as plt
 import numpy as np
-import scipy
+import matplotlib.pyplot as plt
+from scipy.special import gamma, factorial
 
 # Data for plotting
-t = np.linspace(-1.0, 6.0, 1000)
-s = scipy.special.gamma(t)
+x = np.linspace(-3.5, 5.5, 2251)
+y = gamma(x)
 
-x = np.arange(1, 7, 1)
-y = scipy.special.factorial(x-1)
-
-fig, ax = plt.subplots()
-ax.plot(t, s, label="Gamma")
-
-ax.plot(x, y, "or", label="(x-1)!")
-
-ax.set(xlabel='x', ylabel='y',
-       title='Gamma vs factorial')
-ax.legend()
-ax.grid()
-
+plt.plot(x, y, 'b', alpha=0.6, label='gamma(x)')
+k = np.arange(1, 7)
+plt.plot(k, factorial(k-1), 'r*', alpha=0.6,
+         label='(x-1)!, x = 1, 2, ...')
+plt.xlim(-3.5, 5.5)
+plt.ylim(-10, 25)
+plt.grid()
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend(loc='lower right')
 plt.show()
