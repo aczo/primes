@@ -5,7 +5,13 @@ import matplotlib.pyplot as plt
 from scipy.special import gamma, factorial
 import mpmath as mp
 import complexplot as cp
+import primes
 
+
+# vectorize some useful functions
+primesbelow = np.vectorize(primes.primesbelow)
+li = np.vectorize(mp.li)
+RiemannR = np.vectorize(primes.RiemannR)
 
 def plotgamma():
     x = np.linspace(-3.5, 5.5, 2251)
@@ -31,10 +37,14 @@ def plotSampleC():
     cp.plotComplex(z, [-1, 4, -1, 3])
 
 def plotRiemannPrimeCount():
-    x = np.array(mp.arange(2,100,0.01))
-    li = np.vectorize(mp.li)
-    y = li(x)
+    x = np.linspace(2, 100, 10000)
+    y = RiemannR(x)
+    p = primesbelow(x)
     plt.plot(x, y, 'b', label='R(x)')
+    plt.plot(x, p, 'r', label='primes')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend(loc='lower right')
     plt.show()
 
 # plotgamma()
