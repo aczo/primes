@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import gamma, factorial
+import mpmath as mp
 import complexplot as cp
 
 
@@ -29,6 +30,12 @@ def plotSampleC():
     z = x + 1j * y
     cp.plotComplex(z, [-1, 4, -1, 3])
 
+def plotRiemannPrimeCount():
+    x = np.array(mp.arange(2,100,0.01))
+    li = np.vectorize(mp.li)
+    y = li(x)
+    plt.plot(x, y, 'b', label='R(x)')
+    plt.show()
 
 # plotgamma()
-plotSampleC()
+plotRiemannPrimeCount()
