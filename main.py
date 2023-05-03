@@ -10,3 +10,4 @@ for z in range(2):
     plt = plotPrimeCount(z)
     print("done. Time elapsed: " + str(timedelta(seconds=time()-start)))
     plt.savefig("R_x_{:03d}".format(z) + ".png")
+    plt.close()
