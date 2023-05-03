@@ -1,4 +1,4 @@
-# plots complex plane for given data using Hue-Saturation-Value coloring
+# Plots complex plane for given data using Hue-Saturation-Value coloring. Currently not used
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors

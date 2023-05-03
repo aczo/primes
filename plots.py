@@ -1,10 +1,10 @@
 # Implementation of various plots
 
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.special import gamma, factorial
 import complexplot as cp
 import primes
+import matplotlib.pyplot as plt
+from scipy.special import gamma, factorial
 
 
 # vectorize functions that are referred to in plots
@@ -27,9 +27,9 @@ def plotgamma():                # gamma function display - auxiliary plot
     plt.show()
 
 
-def plotPrimeCount(N = 0):    # prime numbers plot, with N being number of zeta zeros to include in R(x) correction
+def plotPrimeCount(n = 0):    # prime numbers plot, with N being number of zeta zeros to include in R(x) correction
     x = np.linspace(1, 100, 3000)
-    y = RiemannPi(x)
+    y = RiemannPi(x, n)
     p = primesbelow(x)
 
     px = 1 / plt.rcParams['figure.dpi']
@@ -52,7 +52,7 @@ def plotPrimeCount(N = 0):    # prime numbers plot, with N being number of zeta 
     axis[1].set_xlim([10, 20])
     axis[1].set_ylim([3.5, 8.5])
     axis[1].legend(loc='lower right')
-    figure.text(0.43, 0.93, str(N) + " non-trivial Zeta zeros corrections included")
+    figure.text(0.43, 0.93, str(n) + " non-trivial Zeta zeros corrections included")
     return plt
     # plt.show()
 
