@@ -4,7 +4,7 @@ from datetime import timedelta
 from plots import plotPrimeCount
 
 
-for z in range(2):
+for z in range(1):
     print("Generating plot for " + str(z) + " non-trivial zeroes...", end="", flush=True)
     start = time()
     plt = plotPrimeCount(z)
