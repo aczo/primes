@@ -1,0 +1,1 @@
+ffmpeg -framerate 0.5 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p r_x.mp4
