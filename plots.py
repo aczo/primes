@@ -13,7 +13,6 @@ primesbelow = np.vectorize(primes.primesbelow)
 li = np.vectorize(mp.li)
 RiemannR = np.vectorize(primes.RiemannR)
 RiemannPi = np.vectorize(primes.RiemannPi)
-RiemannExplicit = np.vectorize(primes.RiemannExplicit)
 
 def plotgamma():                # gamma function display - auxiliary plot
     x = np.linspace(-3.5, 5.5, 2251)
@@ -39,13 +38,11 @@ def plotSampleC():              # sample complex plot with hsv coloring
     cp.plotComplex(z, [-1, 4, -1, 3])
 
 def plotPrimeCount():    # prime numbers plot
-    x = np.linspace(1, 100, 9000)
-    y = RiemannR(x)
-    e = RiemannExplicit(x)
+    x = np.linspace(1, 100, 3000)
+    y = RiemannPi(x)
     p = primesbelow(x)
-    plt.plot(x, y, 'b', label='R(x)')
+    plt.plot(x, y, 'g', label='R(x)')
     plt.plot(x, p, 'r', label='primes')
-    plt.plot(x, e, 'g', label='Explicit')
     plt.xlabel('x')
     plt.ylabel('y')
     plt.xlim([0, 100])
