@@ -1,9 +1,9 @@
-from numpy import abs, log, pi, arctan, cos
+from numpy import abs, log, pi, arctan, cos, sqrt
 from cmath import phase
 import mpmath as mp
 
 
-from scipy.special import factorial, zeta, expi
+from scipy.special import factorial, zeta
 
 # constant list of primes below given number - in the range 2 - 100
 primeCount = [0, 1, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 11, 11,
@@ -11,6 +11,22 @@ primeCount = [0, 1, 2, 2, 3, 3, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 7, 7, 8, 8, 8, 8, 
               16, 17, 17, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22,
               23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 25, 25, 25, 25]
 
+mobius = [1, -1, -1,  0, -1,  1, -1,  0,  0,  1, -1,  0, -1,  1,  1,  0, -1,  0, -1, 0,  1,  1, -1,  0,  0,  1,
+          0,  0, -1, -1, -1,  0,  1,  1,  1,  0, -1,  1, 1,  0, -1, -1, -1,  0,  0,  1, -1,  0,  0,  0,  1,  0,
+          -1,  0,  1,  0,  1, 1, -1,  0, -1,  1,  0,  0,  1, -1, -1,  0,  1, -1, -1,  0, -1,  1,  0,  0, 1, -1,
+          -1,  0,  0,  1, -1,  0,  1,  1,  1,  0, -1,  0,  1,  0,  1,  1,  1, 0, -1,  0,  0,  0, -1, -1, -1,  0,
+          -1,  1, -1,  0, -1, -1,  1,  0, -1, -1, 1,  0,  0,  1,  1,  0,  0,  1,  1,  0,  0,  0, -1,  0,  1, -1,
+          -1,  0,  1, 1,  0,  0, -1, -1, -1,  0,  1,  1,  1,  0,  1,  1,  0,  0, -1,  0, -1,  0, 0, -1,  1,  0,
+          -1,  1,  1,  0,  1,  0, -1,  0, -1,  1, -1,  0,  0, -1,  0, 0, -1, -1,  0,  0,  1,  1, -1,  0, -1, -1,
+          1,  0,  1, -1,  1,  0,  0, -1, -1,  0, -1,  1, -1,  0, -1,  0, -1,  0,  1,  1,  1,  0,  1,  1,  0,  0,
+          1, 1, -1,  0,  1,  1,  1,  0,  1,  1,  1,  0,  1, -1, -1,  0,  0,  1, -1,  0, -1, -1, -1,  0, -1,  0,
+          1,  0,  1, -1, -1,  0, -1,  0,  0,  0,  0, -1,  1, 0,  1,  0, -1,  0,  1,  1, -1,  0, -1, -1,  1,  0,
+          0,  1, -1,  0,  1, -1, 1,  0, -1,  0, -1,  0, -1,  1,  0,  0, -1,  1,  0,  0, -1, -1, -1,  0, -1, -1,
+          1,  0,  0, -1,  1,  0, -1,  0,  1,  0,  0,  1,  1,  0,  1,  1,  1,  0, 1,  0, -1,  0,  1, -1, -1,  0,
+          -1,  1,  0,  0, -1, -1,  1,  0,  1, -1,  1, 0,  0,  1,  1,  0,  1,  1, -1,  0,  0,  1,  1,  0, -1,  0,
+          1,  0,  1,  0, 0,  0, -1,  1, -1,  0, -1,  0,  0,  0, -1, -1,  1,  0, -1,  1, -1,  0,  0, 1,  0,  0,
+          1, -1, -1,  0,  0, -1,  1,  0, -1, -1,  0,  0,  1,  0, -1,  0, 1,  1, -1,  0, -1,  1,  0,  0, -1,  1,
+          1,  0,  1,  1,  1,  0, -1,  1, -1]
 
 def Pi(x):     # returns number of primes smaller than given number (in the range 2..102)
     rv = 0.0
@@ -18,6 +34,12 @@ def Pi(x):     # returns number of primes smaller than given number (in the rang
         rv = primeCount[int(x-1.0001)]
     return rv
 
+
+def Mobius(x):          # implements mobius function
+    rv = 0
+    if 0 < x < 400:
+        rv = mobius[x-1]
+    return rv
 
 def RiemannR(x):        # implements Riemann R(x) using approximation for first N elements
     N = 20              # assume 20 elements in the approximation
@@ -38,5 +60,5 @@ def RiemannPi(x, N = 0):       # approximation of Riemann pi(x) based on R(x) ex
         for i in range(1, N + 1):  # correction considering N non-trivial zeroes
             rho = complex(mp.zetazero(i))
             # below's R(x) correction based on Hans Riesel formula for a pair of complex conjugate zeta zeroes
-            rv -= 2 * x ** (1 / 2) / abs(rho) / log(x) * cos(rho.imag * log(x) - phase(rho))
+            rv-= 2 * sqrt(x) * cos(rho.imag * log(x) - phase(rho)) / abs(rho) / log(x)
     return rv
