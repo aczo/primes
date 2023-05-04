@@ -1,36 +1,20 @@
 # Implementation of various plots
 
 import numpy as np
-import complexplot as cp
 import primes
 import matplotlib.pyplot as plt
 from scipy.special import gamma, factorial
 
 
 # vectorize functions that are referred to in plots
-primesbelow = np.vectorize(primes.primesbelow)
+Pi = np.vectorize(primes.Pi)
 RiemannPi = np.vectorize(primes.RiemannPi)
-
-
-def plotgamma():                # gamma function display - auxiliary plot
-    x = np.linspace(-3.5, 5.5, 2251)
-    y = gamma(x)
-    plt.plot(x, y, 'b', alpha=0.6, label='gamma(x)')
-    k = np.arange(1, 7)
-    plt.plot(k, factorial(k-1), 'r*', alpha=0.6, label='(x-1)!, x = 1, 2, ...')
-    plt.xlim(-3.5, 5.5)
-    plt.ylim(-10, 25)
-    plt.grid()
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.legend(loc='lower right')
-    plt.show()
 
 
 def plotPrimeCount(n = 0):    # prime numbers plot, with N being number of zeta zeros to include in R(x) correction
     x = np.linspace(1, 100, 3000)
     y = RiemannPi(x, n)
-    p = primesbelow(x)
+    p = Pi(x)
 
     px = 1 / plt.rcParams['figure.dpi']
     figure, axis = plt.subplots(1, 2, figsize=(1920*px, 1080*px))
@@ -54,12 +38,4 @@ def plotPrimeCount(n = 0):    # prime numbers plot, with N being number of zeta 
     axis[1].legend(loc='lower right')
     figure.text(0.4, 0.93, str(n) + r" non-trivial $\zeta(x)$ zeros corrections included", fontsize=12)
     return plt
-    # plt.show()
 
-
-def plotSampleC():              # sample complex plot with hsv coloring
-    x = np.arange(-1, 4, 0.05)
-    y = np.arange(-1, 3, 0.05)
-    x, y = np.meshgrid(x, y)
-    z = x + 1j * y
-    cp.plotComplex(z, [-1, 4, -1, 3])
