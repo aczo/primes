@@ -33,6 +33,19 @@ mobius = [1, -1, -1,  0, -1,  1, -1,  0,  0,  1, -1,  0, -1,  1,  1,  0, -1,  0,
           1,  0,  1,  1,  1,  0, -1,  1, -1]
 
 
+zetacache={}
+
+
+def zetaz(n):           # caches zeta zeroes
+    if n in zetacache:
+        rv = zetacache[n]
+    else:
+        print("calculating and caching zeta zero " + str(n) + "...", end="", flush=True)
+        rv = complex(zetazero(n))
+        zetacache[n] = rv
+    return rv
+
+
 def Mobius(x):          # implements mobius function
     rv = 0
     if 0 < x < 400:
@@ -58,7 +71,7 @@ def RiemannR(x):        # implements Riemann R(x) using approximation for first 
 
 
 def RiemannPi(x, N = 0):       # approximation of Riemann pi(x) based on R(x) explicit formula, N - number of zeta zeroes to consider
-    M = 5      # number of f(x) Ck corrections applied to each R(x) point
+    M = 7      # number of f(x) Ck corrections applied to each R(x) point
     rv = 0.0
     if x >= 2:
         rv = RiemannR(x) - 1 / log(x) + 1/pi * arctan(pi/log(x))
@@ -70,6 +83,6 @@ def RiemannPi(x, N = 0):       # approximation of Riemann pi(x) based on R(x) ex
 
 
 def Ck(x, n):              # correction of R(x) resulting from Nth pair of complex zeta zeros
-    rho = complex(zetazero(n))
+    rho = zetaz(n)
     # R(x) correction based on Hans Riesel formula for a pair of complex conjugate zeta zeroes
     return - 2 * sqrt(x) * cos(rho.imag * log(x) - phase(rho)) / abs(rho) / log(x)
