@@ -65,7 +65,7 @@ def RiemannPi(x, N = 0):       # approximation of Riemann pi(x) based on R(x) ex
         for i in range(1, N + 1):  # correction considering N non-trivial zeroes
             # below's R(x) correction based on Hans Riesel formula for a pair of complex conjugate zeta zeroes
             for j in range(1, M + 1):  # introduce Ck corrections
-                rv + = Mobius(j) / j * Ck((x ** (1 / j)), i)
+                rv += Mobius(j) / j * Ck((x ** (1 / j)), i)
     return rv
 
 
