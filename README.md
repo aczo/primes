@@ -1,5 +1,5 @@
 
-## Riemann's R(x) approximation of pi(x)
+## Riemann's R(x) approximation of $\Pi(x)$
 
 This code generates subsequent approximation of prime counting functions pi(x) by Riemann's R(x) using Zeta function complex zeroes
 
